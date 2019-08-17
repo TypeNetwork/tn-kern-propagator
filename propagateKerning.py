@@ -2,7 +2,7 @@
 Propagates kerning from the default master other members of a designspace
 """
 
-from fontparts.world import OpenFont
+from fontParts.world import OpenFont
 import os
 
 # MATH HELPERS
@@ -56,7 +56,7 @@ paths = [
 ]
 
 
-default = OpenFont(os.path.join(os.getcwd(), defaultPath), showUI=False)
+default = OpenFont(os.path.join(os.getcwd(), defaultPath), showInterface=False)
 defaultxtraValue = getValueFromGlyphIndex(default['H'], 22)[0] - getValueFromGlyphIndex(default['H'], 11)[0]
 
 print('default', defaultxtraValue)
