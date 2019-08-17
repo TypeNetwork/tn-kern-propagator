@@ -2,9 +2,27 @@
 Propagates kerning from the default master other members of a designspace
 """
 
-from drawbotlab.math import lerp, norm
 from fontparts.world import OpenFont
 import os
+
+# MATH HELPERS
+
+def lerp(start, stop, amt):
+	"""
+	Return the interpolation factor (between 0 and 1) of a VALUE between START and STOP.
+	https://processing.org/reference/lerp_.html
+	"""
+	return float(amt-start) / float(stop-start)
+	
+def norm(value, start, stop):
+	"""
+	Interpolate using a value between 0 and 1
+	See also: https://processing.org/reference/norm_.html
+	"""
+	return start + (stop-start) * value
+
+
+
 # get point indexes from glyph
 def getValueFromGlyphIndex(g, index):
     """
