@@ -59,13 +59,37 @@ paths = [
 default = OpenFont(os.path.join(os.getcwd(), defaultPath), showInterface=False)
 defaultxtraValue = getValueFromGlyphIndex(default['H'], 22)[0] - getValueFromGlyphIndex(default['H'], 11)[0]
 
-print('default', defaultxtraValue)
+print("| Source | Multiplier | XTRA value |")
+print('| default', '|', 1, '|', defaultxtraValue, '|')
 
 for path in paths:
     f = OpenFont(os.path.join(os.getcwd(), path), showInterface=False)
     xtraValue = getValueFromGlyphIndex(f['H'], 22)[0] - getValueFromGlyphIndex(f['H'], 11)[0]
     m = xtraValue / defaultxtraValue
-    print(path, m, xtraValue)
+    
+    """
+Input: opsz 008 wdth 100 wght 400 lxtra 0.98 + from dxtra...
+Input: opsz 014 wdth 050 wght 400 lxtra 1.10
+Input: opsz 014 wdth 150 wght 400 lxtra 1.50
+Input: opsz 014 wdth 100 wght 100 lxtra 1.40
+Input: opsz 014 wdth 100 wght 900 lxtra 1.05
+Input: opsz 144 wdth 100 wght 400 lxtra 1.20
+
+    """
+    if path == 'Amstelvar-Roman-opsz-min.ufo':
+        m = 0.98
+    elif path == 'Amstelvar-Roman-wdthmin.ufo':
+        m *= 1.1
+    elif path == 'Amstelvar-Roman-wdthmax.ufo':
+        m *= 1.5
+    elif path == 'Amstelvar-Roman-wghtmax.ufo':
+        m *= 1.4
+    elif path == 'Amstelvar-Roman-wghtmin.ufo':
+        m *= 1.05
+    elif path == 'Amstelvar-Roman-opsz-max.ufo':
+        m *= 1.20                        
+    
+    print('|', path, '|', m, '|', xtraValue, '|')
     
     f.groups.clear()
     f.kerning.clear()
@@ -78,3 +102,5 @@ for path in paths:
         f.kerning[pair] = int(round(value * m))
     f.save()
 print('done')
+
+
